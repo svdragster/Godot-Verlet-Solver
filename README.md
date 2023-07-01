@@ -3,6 +3,7 @@ A Verlet Algorithm implemented in Godot 4 with some examples. My long term goal 
 
 ## Example
 Examples can be found in the `example` directory.
+
 https://github.com/svdragster/GodotVerletSolver/assets/3999238/b18fa05c-b629-477a-86df-e77f8f8b2550
 
 ## How it works
