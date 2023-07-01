@@ -39,5 +39,6 @@ Not necessarily in order
 - [ ] support more shapes for collisions
 - [ ] use chunk system for collisions
 - [ ] multithreading chunks
+- [ ] 3d implementation
 - [ ] add fixed point numbers
 - [ ] Implement in GDExtension (C++) for better performance
