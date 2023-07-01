@@ -51,9 +51,9 @@ func update(delta : float) -> void:
 
 
 func solve_collision(other : VerletObject2D):
-	var collision : Vector2 = other.position - position
+	var collision : Vector2 = other.position - self.position
 	
-	if shape is CircleShape2D and other.shape is CircleShape2D:
+	if self.shape is CircleShape2D and other.shape is CircleShape2D:
 		solve_circle_circle_collision(collision, self, other, self.shape, other.shape)
 		
 			
@@ -61,11 +61,17 @@ func solve_circle_circle_collision(collision : Vector2, object_a : VerletObject2
 	var radius = shape_a.radius + shape_b.radius
 	var distance_squared = collision.length_squared()
 	if distance_squared < radius*radius:
+		# Calculate the force with how much they should push eachother away.
+		# If they barely overlap, the force will be very small
 		var n : float = sqrt(distance_squared) / (radius)
 		if n < 0.9:
 			n = 0.9
 		var damping : float = (1.0 - n) * 0.75
-		var bias := Vector2(0.00001, 0.000001)
+		
+		# Add a very small bias in case the positions are exactly the same
+		var bias := Vector2(0.00001, 0.000001) 
+		
+		# Push the objects away from eachother
 		object_a.position -= collision * damping + bias
 		object_b.position += collision * damping
 		object_a.friction = 0.99

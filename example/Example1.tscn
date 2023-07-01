@@ -5,6 +5,8 @@
 
 [node name="Example1" type="Node2D"]
 script = ExtResource("1_1l3wt")
+spawn_rate = 0.16
+max_spawned = 30
 
 [node name="VerletSolver2D" type="Node" parent="."]
 script = ExtResource("1_ppyjr")

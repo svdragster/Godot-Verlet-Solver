@@ -14,6 +14,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta : float) -> void:
+	print(delta)
 	var sub_delta : float = delta / substeps
 	for i in range(substeps):
 		check_collisions(sub_delta)
