@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://b8iqvlc8ocx0a"]
+
+[ext_resource type="Script" path="res://verlet2d/verlet_solver_2d.gd" id="1_dojjn"]
+[ext_resource type="PackedScene" uid="uid://38o28s77opew" path="res://verlet2d/shapes/VerletCircle2D.tscn" id="2_510tb"]
+
+[node name="ExampleCollision" type="Node2D"]
+
+[node name="VerletSolver2D" type="Node" parent="."]
+script = ExtResource("1_dojjn")
+gravity = Vector2(0, 20)
+
+[node name="VerletCircle2D" parent="VerletSolver2D" instance=ExtResource("2_510tb")]
+position = Vector2(-5, -43)
+
+[node name="VerletCircle2D2" parent="VerletSolver2D" instance=ExtResource("2_510tb")]
+position = Vector2(-27, 0)
+
+[node name="Camera2D" type="Camera2D" parent="."]

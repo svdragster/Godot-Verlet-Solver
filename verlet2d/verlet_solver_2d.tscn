@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ciqakxpogrfe3"]
+
+[ext_resource type="Script" path="res://verlet2d/verlet_solver_2d.gd" id="1_e38ii"]
+
+[node name="verlet_solver_2d" type="Node"]
+script = ExtResource("1_e38ii")
