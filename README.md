@@ -2,9 +2,11 @@
 A Verlet Algorithm implemented in Godot 4 with some examples. My long term goal is to create a deterministic physics simulation where an equal input always results in the same output.
 
 ## Example
-Examples can be found in the `example` directory.
+When running the simulation with the exact same input, the circles will always end up in the same positions with the same rotations:
 
 https://github.com/svdragster/GodotVerletSolver/assets/3999238/b18fa05c-b629-477a-86df-e77f8f8b2550
+
+Examples can be found in the `example` directory.
 
 ## How it works
 
@@ -39,5 +41,6 @@ Not necessarily in order
 - [ ] support more shapes for collisions
 - [ ] use chunk system for collisions
 - [ ] multithreading chunks
+- [ ] 3d implementation
 - [ ] add fixed point numbers
 - [ ] Implement in GDExtension (C++) for better performance
