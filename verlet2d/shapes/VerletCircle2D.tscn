@@ -1,14 +1,14 @@
 [gd_scene load_steps=5 format=3 uid="uid://38o28s77opew"]
 
-[ext_resource type="Script" path="res://verlet2d/verlet_object_2d.gd" id="1_521n2"]
+[ext_resource type="Script" path="res://verlet2d/shapes/verlet_circle_2d.gd" id="1_8h3mi"]
 [ext_resource type="Texture2D" uid="uid://ctfkqvk6qts80" path="res://round.png" id="2_tlbvo"]
 [ext_resource type="Script" path="res://verlet2d/collisions/verlet_collision_2d.gd" id="3_p6vyn"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_3rrgj"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_pr44a"]
 radius = 22.0
 
 [node name="VerletCircle2D" type="Node2D"]
-script = ExtResource("1_521n2")
+script = ExtResource("1_8h3mi")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.37931, 0.37931)
@@ -16,4 +16,4 @@ texture = ExtResource("2_tlbvo")
 
 [node name="VerletCollision2D" type="Node2D" parent="."]
 script = ExtResource("3_p6vyn")
-shape = SubResource("CircleShape2D_3rrgj")
+shape = SubResource("CircleShape2D_pr44a")

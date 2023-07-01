@@ -5,8 +5,6 @@ extends Node2D
 var spawned := 0
 var time := 0.0
 
-var radius_list := [20, 25, 30, 15, 30, 25, 25, 40, 60]
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -20,10 +18,10 @@ func _physics_process(delta):
 	if time >= spawn_rate and spawned < max_spawned:
 		time -= spawn_rate
 		
-		var o = preload("res://verlet2d/shapes/VerletCircle2D.tscn").instantiate()
+		var o = preload("res://verlet2d/shapes/VerletRectangle2D.tscn").instantiate()
 		o.position = Vector2(-190, -190)
 		$VerletSolver2D.add_child(o)
 		o.acceleration = Vector2(4000.0, 100.0)
-		o.set_radius(radius_list[spawned % radius_list.size()])
+		o.set_size(30, 20)
 		
 		spawned += 1

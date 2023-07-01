@@ -8,18 +8,18 @@ class_name VerletSolver2D
 var world_size := Vector2(200, 200)
 var margin := 2.0
 
+var collision_solver := VerletCollisionSolver2D.new()
+
 func _ready() -> void:
 	set_physics_process(true)
 
 
 
 func _physics_process(delta : float) -> void:
-	print(delta)
 	var sub_delta : float = delta / substeps
 	for i in range(substeps):
 		check_collisions(sub_delta)
 		update_objects(sub_delta)	
-
 
 func update_objects(delta : float) -> void:
 	for child in get_children():
@@ -47,7 +47,7 @@ func check_collisions(delta : float) -> void:
 		for k in range(i+1, get_child_count()):
 			var child_b : VerletObject2D = get_child(k)
 			
-			child_a.solve_collision(child_b)
+			collision_solver.solve_collision(child_a, child_b)
 			
 			
 		

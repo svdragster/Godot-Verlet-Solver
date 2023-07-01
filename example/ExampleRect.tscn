@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://hjkope0h5gaj"]
+
+[ext_resource type="Script" path="res://example/ExampleRect.gd" id="1_prmc2"]
+[ext_resource type="Script" path="res://verlet2d/verlet_solver_2d.gd" id="2_148tp"]
+
+[node name="ExampleRect" type="Node2D"]
+script = ExtResource("1_prmc2")
+max_spawned = 1
+
+[node name="VerletSolver2D" type="Node" parent="."]
+script = ExtResource("2_148tp")
+
+[node name="Camera2D" type="Camera2D" parent="."]
