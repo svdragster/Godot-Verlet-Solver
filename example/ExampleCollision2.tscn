@@ -17,5 +17,6 @@ position = Vector2(-9, -133)
 
 [node name="VerletRectangle2D" parent="VerletSolver2D" instance=ExtResource("4_ogc2d")]
 position = Vector2(10, 11)
+scale = Vector2(2, 1)
 
 [node name="Camera2D" type="Camera2D" parent="."]

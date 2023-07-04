@@ -47,7 +47,7 @@ func _physics_process(delta):
 		var o = preload("res://verlet2d/shapes/VerletRectangle2D.tscn").instantiate()
 		o.position = get_global_mouse_position()
 		$VerletSolver2D.add_child(o)
-		o.set_size(100, 100)
+		o.set_size(100, 60)
 	
 #	time += delta
 #

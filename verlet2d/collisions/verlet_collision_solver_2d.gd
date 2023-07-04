@@ -64,9 +64,6 @@ func solve_collision_shapes(object_a : VerletObject2D, object_b : VerletObject2D
 			#var angle_a = -(collision_arm_a.angle() - object_a.rotation)
 			#var angle_b = -(collision_arm_b.angle() - object_b.rotation)
 			
-			print(collision_normal.cross(collision_arm_a))
-			print(collision_normal.cross(collision_arm_b))
-			
 			var torque_a = -collision_normal.cross(collision_arm_a) / contact_amount
 			var torque_b = collision_normal.cross(collision_arm_b) / contact_amount
 			
