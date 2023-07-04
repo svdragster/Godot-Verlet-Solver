@@ -25,7 +25,7 @@ func update(delta : float) -> void:
 	
 	
 	# Rotation
-	update_rotation(delta, velocity)
+	update_rotation(delta)
 	
 	angular_acceleration = 0.0
 	
@@ -33,8 +33,7 @@ func update(delta : float) -> void:
 	friction = 1.0
 	acceleration = Vector2.ZERO
 
-func update_rotation(delta : float, velocity : Vector2):
-	angular_acceleration = velocity.x
+func update_rotation(delta : float):
 	var angular_velocity : float = (rotation - last_rotation) * friction
 	if abs(angular_velocity) < 0.0001:
 		angular_velocity = 0.0

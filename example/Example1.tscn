@@ -7,7 +7,7 @@
 script = ExtResource("1_1l3wt")
 spawn_rate = 0.25
 
-[node name="VerletSolver2D" type="Node" parent="."]
+[node name="VerletSolver2D" type="Node2D" parent="."]
 script = ExtResource("1_ppyjr")
 
 [node name="Camera2D" type="Camera2D" parent="."]

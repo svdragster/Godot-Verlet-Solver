@@ -5,9 +5,10 @@
 
 [node name="ExampleRect" type="Node2D"]
 script = ExtResource("1_prmc2")
-max_spawned = 1
+spawn_rate = 0.5
+max_spawned = 4
 
-[node name="VerletSolver2D" type="Node" parent="."]
+[node name="VerletSolver2D" type="Node2D" parent="."]
 script = ExtResource("2_148tp")
 
 [node name="Camera2D" type="Camera2D" parent="."]

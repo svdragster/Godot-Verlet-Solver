@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bkp6xtkm5pbqv"]
+
+[ext_resource type="Script" path="res://verlet2d/collisions/verlet_collision_solver_2d.gd" id="1_sla6q"]
+
+[node name="VerletCollisionSolver2D" type="Node2D"]
+script = ExtResource("1_sla6q")

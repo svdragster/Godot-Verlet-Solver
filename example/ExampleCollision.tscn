@@ -5,7 +5,7 @@
 
 [node name="ExampleCollision" type="Node2D"]
 
-[node name="VerletSolver2D" type="Node" parent="."]
+[node name="VerletSolver2D" type="Node2D" parent="."]
 script = ExtResource("1_dojjn")
 gravity = Vector2(0, 20)
 

@@ -23,7 +23,7 @@ func _physics_process(delta):
 		var o = preload("res://verlet2d/shapes/VerletCircle2D.tscn").instantiate()
 		o.position = Vector2(-190, -190)
 		$VerletSolver2D.add_child(o)
-		o.acceleration = Vector2(4000.0, 100.0)
+		o.acceleration = Vector2(400.0, 100.0)
 		o.set_radius(radius_list[spawned % radius_list.size()])
 		
 		spawned += 1

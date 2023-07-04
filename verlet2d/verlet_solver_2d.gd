@@ -1,11 +1,11 @@
-extends Node
+extends Node2D
 
 class_name VerletSolver2D
 
 @export var substeps : int = 8
 @export var gravity : Vector2 = Vector2(0.0, 30.0)
 
-var world_size := Vector2(200, 200)
+var world_size := Vector2(400, 250)
 var margin := 2.0
 
 var collision_solver := VerletCollisionSolver2D.new()
@@ -13,13 +13,23 @@ var collision_solver := VerletCollisionSolver2D.new()
 func _ready() -> void:
 	set_physics_process(true)
 
+func _process(delta):
+	queue_redraw()
 
+func _draw():
+	for v in collision_solver.vectors:
+		draw_line(v[0], v[1], Color(v[2], 0.3), 2.0)
+	for c in collision_solver.collisions:
+		draw_rect(Rect2(c - Vector2(3, 3), Vector2(6, 6)), Color(Color.DARK_RED, 0.3), true)
 
 func _physics_process(delta : float) -> void:
+	collision_solver.collisions.clear()
+	collision_solver.vectors.clear()
 	var sub_delta : float = delta / substeps
 	for i in range(substeps):
 		check_collisions(sub_delta)
-		update_objects(sub_delta)	
+	update_objects(delta)	
+
 
 func update_objects(delta : float) -> void:
 	for child in get_children():
