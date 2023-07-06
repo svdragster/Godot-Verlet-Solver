@@ -38,17 +38,17 @@ func solve_circle_circle_collision(collision : Vector2, object_a : VerletObject2
 		# Push the objects away from eachother
 		object_a.position -= (collision * ratio_b) * damping + bias
 		object_b.position += (collision * ratio_a) * damping
-		object_a.friction = 0.99
-		object_b.friction = 0.99
 
 func solve_collision_shapes(object_a : VerletObject2D, object_b : VerletObject2D, shape_a : Shape2D, shape_b : Shape2D) -> void:
+	if object_a.is_static and object_b.is_static:
+		return
 	var contacts := shape_a.collide_and_get_contacts(object_a.transform, shape_b, object_b.transform)
 	var contact_amount = contacts.size() / 2
 	if contact_amount >= 1:
 		for i in range(0, contacts.size(), 2):
 			var contact_a : Vector2 = contacts[i]
 			var contact_b : Vector2 = contacts[i+1]
-			collisions.append_array([contact_a, contact_b])
+			collisions.append_array([[contact_a, Color.RED], [contact_b, Color.DARK_RED]])
 			var contact_vector : Vector2 = contact_b - contact_a
 			var collision_normal : Vector2 = contact_vector.normalized()
 			var collision_depth : float = contact_vector.length()
@@ -58,8 +58,11 @@ func solve_collision_shapes(object_a : VerletObject2D, object_b : VerletObject2D
 			var collision_arm_a = contact_a - center_of_mass_a
 			var collision_arm_b = contact_b - center_of_mass_b
 			
+			collisions.append_array([[center_of_mass_a, Color.RED], [center_of_mass_b, Color.DARK_RED]])
+			
 			vectors.append([center_of_mass_a, contact_a, Color.DARK_GREEN])
 			vectors.append([center_of_mass_b, contact_b, Color.GREEN])
+			vectors.append([contact_b, contact_a, Color.ORANGE])
 			
 			#var angle_a = -(collision_arm_a.angle() - object_a.rotation)
 			#var angle_b = -(collision_arm_b.angle() - object_b.rotation)
@@ -75,16 +78,29 @@ func solve_collision_shapes(object_a : VerletObject2D, object_b : VerletObject2D
 			var bias := Vector2(0.00001, 0.000001) 
 			var damping : float = 0.2
 			
-			#var ratio_a : float = float(shape_a.radius) / radius
-			#var ratio_b : float = float(shape_b.radius) / radius
-			
 			# Push the objects away from eachother
 			if not object_a.is_static:
 				object_a.position += (contact_vector) * damping + bias
 			if not object_b.is_static:
 				object_b.position -= (contact_vector) * damping
-			#object_a.update_position(object_a.position + (collision_normal) * damping + bias)
-			#object_b.update_position(object_b.position - (collision_normal) * damping)
-			object_a.friction = 0.95
-			object_b.friction = 0.95
+			
+			#
+			# Friction
+			#
+			
+			object_a.friction *= 0.96
+			object_b.friction *= 0.96
+			
+#			var velocity_a = object_a.position - object_a.last_position
+#			var velocity_b = object_b.position - object_b.last_position
+#
+#			var tangent_a = (velocity_a - velocity_a.dot(collision_normal) * collision_normal).normalized() * 0.995
+#			var tangent_b = (velocity_b - velocity_b.dot(collision_normal) * collision_normal).normalized() * 0.995
+#
+#			vectors.append([center_of_mass_a, center_of_mass_a + (tangent_a * 20), Color.GOLDENROD])
+#			vectors.append([center_of_mass_b, center_of_mass_b + (tangent_b * 20), Color.DARK_GOLDENROD])
+			
+			#object_a.friction = tangent_a
+			#object_b.friction = tangent_b
+			
 		

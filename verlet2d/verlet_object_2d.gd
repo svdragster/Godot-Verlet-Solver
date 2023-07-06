@@ -9,8 +9,6 @@ var acceleration : Vector2 = Vector2.ZERO
 
 var is_static : bool = false
 
-var friction := 1.0
-
 func _ready() -> void:
 	last_position = position
 	z_index = RenderingServer.CANVAS_ITEM_Z_MIN
