@@ -10,14 +10,9 @@ func _ready():
 	super._ready()
 	last_rotation = rotation
 
-func set_radius(radius : int):
-	var sprite_radius = 116.0/2
-	var scale = radius / sprite_radius
-	$Sprite2D.scale = Vector2(scale, scale)
-	shape = shape.duplicate()
-	shape.radius = radius
-
 func update(delta : float) -> void:
+	if is_static:
+		return
 	# Velocity
 	var velocity : Vector2 = (position - last_position) * friction
 	var new_position : Vector2 = position + velocity + (acceleration*40) * (delta * delta)

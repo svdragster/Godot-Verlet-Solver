@@ -10,12 +10,6 @@ var friction : float = 1.0
 
 func _ready():
 	super._ready()
-	set_size(scale.x, scale.y)
-
-func set_size(x : float, y : float) -> void:
-	#$Sprite2D.set_scale(Vector2(x, y))
-	shape = shape.duplicate()
-	#shape.size = Vector2(x * 128.0, y * 128.0)
 
 func update(delta : float) -> void:
 	if not is_static:
@@ -42,12 +36,12 @@ func update(delta : float) -> void:
 		angular_acceleration = 0.0
 		
 		# Reset
-		friction = 1.0
+		friction = 0.999
 		acceleration = Vector2.ZERO
 	
 	
 func update_rotation(delta : float):
-	var angular_velocity : float = (rotation - last_rotation)
+	var angular_velocity : float = (rotation - last_rotation) * friction
 	if abs(angular_velocity) < 0.005:
 		angular_velocity = 0.0
 		last_rotation = rotation

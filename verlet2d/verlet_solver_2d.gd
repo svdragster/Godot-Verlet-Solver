@@ -9,6 +9,7 @@ var world_size := Vector2(400, 250)
 var margin := 2.0
 
 var collision_solver := VerletCollisionSolver2D.new()
+var constraint_list := []
 
 var draw_debug := true
 
@@ -31,6 +32,7 @@ func _physics_process(delta : float) -> void:
 	var sub_delta : float = delta / substeps
 	for i in range(substeps):
 		check_collisions(sub_delta)
+		update_constraints(sub_delta)
 	update_objects(delta)	
 
 
@@ -50,6 +52,10 @@ func update_objects(delta : float) -> void:
 #		elif child.position.y < -world_size.y - margin:
 #			child.position.y = -world_size.y - margin
 
+func update_constraints(delta : float) -> void:
+	for c in constraint_list:
+		c.update_constraint(delta)
+
 func check_collisions(delta : float) -> void:
 	for i in range(get_child_count()):
 		var child_a : VerletObject2D = get_child(i)
@@ -59,4 +65,5 @@ func check_collisions(delta : float) -> void:
 			collision_solver.solve_collision(child_a, child_b)
 			
 			
-		
+func add_constraint(c : VerletConstraint2D) -> void:
+	constraint_list.append(c)

@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://c11q1dvxj3g7o"]
+
+[ext_resource type="Script" path="res://example/ExampleChain.gd" id="1_duhcu"]
+[ext_resource type="Script" path="res://verlet2d/verlet_solver_2d.gd" id="2_rmolg"]
+[ext_resource type="PackedScene" uid="uid://38o28s77opew" path="res://verlet2d/shapes/VerletCircle2D.tscn" id="3_s1oc2"]
+[ext_resource type="PackedScene" uid="uid://do16c3fylu8ty" path="res://verlet2d/shapes/VerletRectangle2D.tscn" id="4_aamw4"]
+
+[node name="ExampleChain" type="Node2D"]
+script = ExtResource("1_duhcu")
+
+[node name="VerletSolver2D" type="Node2D" parent="."]
+script = ExtResource("2_rmolg")
+
+[node name="A" parent="VerletSolver2D" instance=ExtResource("3_s1oc2")]
+position = Vector2(0, -46)
+is_static = true
+
+[node name="B" parent="VerletSolver2D" instance=ExtResource("3_s1oc2")]
+position = Vector2(-23, -4)
+
+[node name="C" parent="VerletSolver2D" instance=ExtResource("3_s1oc2")]
+position = Vector2(-65, 26)
+
+[node name="D" parent="VerletSolver2D" instance=ExtResource("3_s1oc2")]
+position = Vector2(-113, 48)
+
+[node name="E" parent="VerletSolver2D" instance=ExtResource("3_s1oc2")]
+position = Vector2(-113, 48)
+
+[node name="F" parent="VerletSolver2D" instance=ExtResource("4_aamw4")]
+position = Vector2(-171, 70)
+scale = Vector2(0.3, 0.3)
+
+[node name="Bullet" parent="VerletSolver2D" instance=ExtResource("3_s1oc2")]
+position = Vector2(129, -11)
+
+[node name="Camera2D" type="Camera2D" parent="."]
