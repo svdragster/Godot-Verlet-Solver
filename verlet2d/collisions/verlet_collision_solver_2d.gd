@@ -88,8 +88,8 @@ func solve_collision_shapes(object_a : VerletObject2D, object_b : VerletObject2D
 			# Friction
 			#
 			
-			object_a.friction *= 0.96
-			object_b.friction *= 0.96
+			object_a.friction = 0.96
+			object_b.friction = 0.96
 			
 #			var velocity_a = object_a.position - object_a.last_position
 #			var velocity_b = object_b.position - object_b.last_position

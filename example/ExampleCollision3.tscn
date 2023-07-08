@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://xuv4lsufnt8c"]
+
+[ext_resource type="Script" path="res://example/ExampleCollision3.gd" id="1_yjj54"]
+[ext_resource type="Script" path="res://verlet2d/verlet_solver_2d.gd" id="2_gcnf6"]
+[ext_resource type="PackedScene" uid="uid://do16c3fylu8ty" path="res://verlet2d/shapes/VerletRectangle2D.tscn" id="4_wjsb1"]
+
+[node name="ExampleCollision3" type="Node2D"]
+script = ExtResource("1_yjj54")
+
+[node name="VerletSolver2D" type="Node2D" parent="."]
+script = ExtResource("2_gcnf6")
+gravity = Vector2(0, 10)
+
+[node name="VerletRectangle2D" parent="VerletSolver2D" instance=ExtResource("4_wjsb1")]
+position = Vector2(10, 11)
+scale = Vector2(7.56127, 0.360072)
+is_static = true
+
+[node name="Player" parent="VerletSolver2D" instance=ExtResource("4_wjsb1")]
+position = Vector2(-92, -48)
+scale = Vector2(0.467604, 0.467604)
+
+[node name="VerletRectangle2D2" parent="VerletSolver2D" instance=ExtResource("4_wjsb1")]
+position = Vector2(63, -11)
+rotation = -0.341757
+scale = Vector2(5.10971, 0.315457)
+is_static = true
+
+[node name="Camera2D" type="Camera2D" parent="."]

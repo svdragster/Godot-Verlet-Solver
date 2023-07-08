@@ -7,7 +7,7 @@ var shape : Shape2D
 var last_position : Vector2
 var acceleration : Vector2 = Vector2.ZERO
 
-var is_static : bool = false
+@export var is_static : bool = false
 
 func _ready() -> void:
 	last_position = position

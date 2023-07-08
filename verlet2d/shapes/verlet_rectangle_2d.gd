@@ -10,14 +10,12 @@ var friction : float = 1.0
 
 func _ready():
 	super._ready()
-	set_size(scale.x * 64.0, scale.y * 64.0)
+	set_size(scale.x, scale.y)
 
-func set_size(x : int, y : int) -> void:
-	var sprite_width = 128.0
-	var sprite_height = 128.0
-	$Sprite2D.scale = Vector2(x / sprite_width, y / sprite_height)
+func set_size(x : float, y : float) -> void:
+	#$Sprite2D.set_scale(Vector2(x, y))
 	shape = shape.duplicate()
-	shape.size = Vector2(x, y)
+	#shape.size = Vector2(x * 128.0, y * 128.0)
 
 func update(delta : float) -> void:
 	if not is_static:
