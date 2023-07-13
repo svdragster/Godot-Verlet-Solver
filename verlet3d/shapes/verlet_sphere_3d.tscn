@@ -1,0 +1,24 @@
+[gd_scene load_steps=6 format=3 uid="uid://c2dtbsgpnlcnq"]
+
+[ext_resource type="Script" path="res://verlet3d/shapes/verlet_sphere_3d.gd" id="1_06bca"]
+[ext_resource type="Script" path="res://verlet3d/collisions/verlet_collision_3d.gd" id="2_h1wm2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ppp0l"]
+albedo_color = Color(0.494118, 0.270588, 0.486275, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_awfsn"]
+material = SubResource("StandardMaterial3D_ppp0l")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_y1x38"]
+radius = 0.6
+
+[node name="VerletSphere3D" type="Node3D"]
+script = ExtResource("1_06bca")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_awfsn")
+
+[node name="VerletCollision3D" type="Node3D" parent="."]
+visible = false
+script = ExtResource("2_h1wm2")
+shape = SubResource("SphereShape3D_y1x38")

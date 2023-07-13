@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bg8hjm6xams5r"]
+
+[ext_resource type="Script" path="res://verlet3d/verlet_object_3d.gd" id="1_q82yx"]
+
+[node name="VerletObject3D" type="Node3D"]
+script = ExtResource("1_q82yx")
