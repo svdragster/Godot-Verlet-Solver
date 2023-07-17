@@ -45,10 +45,10 @@ if contact_amount >= 1:
 2. Currently, Godot 64-bit double-precision floats are used for calculations (equal to double in C++). For data structures such as Vector2 and Vector3, Godot uses 32-bit floating-point numbers (Source: https://docs.godotengine.org/de/stable/classes/class_float.html). This could result in different behaviour on different machines. My long term goal is to use fixed point numbers so the calculations will behave the same on all systems.
 
 ## Goals
-Not necessarily in order
-- [ ] support more shapes for collisions
+These are somwhat in order
+- [ ] WIP: support more shapes for collisions (2d currently supports spheres and rectangles, see directory `verlet2d/shapes`)
+- [ ] WIP: 3d implementation (see branch `3d` [https://github.com/svdragster/GodotVerletSolver/tree/3d/verlet3d](https://github.com/svdragster/GodotVerletSolver/tree/3d/verlet3d))
+- [ ] add fixed point numbers
 - [ ] use chunk system for collisions
 - [ ] multithreading chunks
-- [ ] 3d implementation
-- [ ] add fixed point numbers
 - [ ] Implement in GDExtension (C++) for better performance
