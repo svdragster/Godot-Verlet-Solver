@@ -1,5 +1,6 @@
 extends VerletObject3D
 
+class_name VerletSphere3D
 
 var last_rotation : float = 0.0
 var angular_acceleration : float = 0.0

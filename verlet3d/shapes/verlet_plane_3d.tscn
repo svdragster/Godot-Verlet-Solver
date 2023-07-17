@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://r2xyc2uxjpcn"]
+
+[ext_resource type="Script" path="res://verlet3d/shapes/verlet_plane_3d.gd" id="1_mtu4n"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_v68ge"]
+
+[node name="VerletPlane3D" type="Node3D"]
+script = ExtResource("1_mtu4n")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+rotation_edit_mode = 2
+mesh = SubResource("PlaneMesh_v68ge")

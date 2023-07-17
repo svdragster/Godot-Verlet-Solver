@@ -1,0 +1,43 @@
+[gd_scene load_steps=8 format=3 uid="uid://h8cholh83c17"]
+
+[ext_resource type="Script" path="res://example/3d/Example3D_2.gd" id="1_ld7fk"]
+[ext_resource type="PackedScene" uid="uid://1ic0f4wrfth0" path="res://verlet3d/verlet_solver_3d.tscn" id="2_p86lk"]
+[ext_resource type="PackedScene" uid="uid://c2dtbsgpnlcnq" path="res://verlet3d/shapes/verlet_sphere_3d.tscn" id="3_tko6a"]
+[ext_resource type="PackedScene" uid="uid://r2xyc2uxjpcn" path="res://verlet3d/shapes/verlet_plane_3d.tscn" id="3_xi7gj"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_smfak"]
+sky_top_color = Color(0.298039, 0.443137, 0.717647, 1)
+sky_horizon_color = Color(0.513726, 0.678431, 0.803922, 1)
+ground_bottom_color = Color(0.0941176, 0.0784314, 0.0666667, 1)
+ground_horizon_color = Color(0.615686, 0.388235, 0.294118, 1)
+ground_curve = 0.00378927
+
+[sub_resource type="Sky" id="Sky_lg003"]
+sky_material = SubResource("ProceduralSkyMaterial_smfak")
+
+[sub_resource type="Environment" id="Environment_j7owh"]
+background_mode = 2
+sky = SubResource("Sky_lg003")
+
+[node name="Example3D_2" type="Node3D"]
+script = ExtResource("1_ld7fk")
+
+[node name="VerletSolver3D" parent="." instance=ExtResource("2_p86lk")]
+gravity = Vector3(0, -5, 0)
+
+[node name="VerletSphere3D" parent="VerletSolver3D" instance=ExtResource("3_tko6a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 3.5, -5)
+
+[node name="VerletPlane3D" parent="VerletSolver3D" instance=ExtResource("3_xi7gj")]
+transform = Transform3D(9.65926, 0.258819, -2.3066e-08, -2.5, 0.933013, -2.58819, -0.669873, 0.25, 9.65926, 1, 0, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.932784, -1.57552e-08, 0.360436, -0.354327, -0.183334, 0.916974, 0.0660802, -0.983051, -0.171011, 0, 2, 0)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.99558, -0.0131227, 0.0929959, -0.0469586, 0.787976, 0.613913, -0.0813347, -0.615567, 0.783877, 0.722088, 4.43193, 6.23248)
+fov = 83.1347
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_j7owh")
