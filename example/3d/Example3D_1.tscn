@@ -3,9 +3,7 @@
 [ext_resource type="Script" path="res://example/3d/Example3D_1.gd" id="1_6jre3"]
 [ext_resource type="PackedScene" uid="uid://1ic0f4wrfth0" path="res://verlet3d/verlet_solver_3d.tscn" id="1_ovomk"]
 [ext_resource type="PackedScene" uid="uid://c2dtbsgpnlcnq" path="res://verlet3d/shapes/verlet_sphere_3d.tscn" id="2_alocn"]
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_6qw83"]
-size = Vector2(5, 5)
+[ext_resource type="PackedScene" uid="uid://r2xyc2uxjpcn" path="res://verlet3d/shapes/verlet_plane_3d.tscn" id="4_3j2pk"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_smfak"]
 sky_top_color = Color(0.298039, 0.443137, 0.717647, 1)
@@ -26,21 +24,19 @@ script = ExtResource("1_6jre3")
 
 [node name="VerletSolver3D" parent="." instance=ExtResource("1_ovomk")]
 
-[node name="VerletSphere3D" parent="VerletSolver3D" instance=ExtResource("2_alocn")]
-
 [node name="VerletSphere3D2" parent="VerletSolver3D" instance=ExtResource("2_alocn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.129599, 1.29341, 0.221587)
+
+[node name="VerletPlane3D" parent="VerletSolver3D" instance=ExtResource("4_3j2pk")]
+transform = Transform3D(2, 0, 0, 0, 1, 0, 0, 0, 2, 0, -1, 0)
+is_static = true
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.932784, -1.57552e-08, 0.360436, -0.354327, -0.183334, 0.916974, 0.0660802, -0.983051, -0.171011, 0, 2, 0)
 shadow_enabled = true
 
-[node name="Floor" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-mesh = SubResource("PlaneMesh_6qw83")
-
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.81042, 0.585849, 0, -0.585849, 0.81042, 0, 4.43193, 4.56143)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.984303, 1.48584)
 fov = 104.062
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]

@@ -44,18 +44,20 @@ func solve_collision(object_a : VerletObject3D, object_b : VerletObject3D) -> vo
 
 func solve_collision_spheres(object_a : VerletObject3D, object_b : VerletObject3D, shape_a : SphereShape3D, shape_b : SphereShape3D) -> void:
 	var collision : Vector3 = object_b.position - object_a.position
-	var radius_squared_sum = shape_a.radius*shape_a.radius + shape_b.radius*shape_b.radius
-	var distance_squared = collision.length_squared()
-	if distance_squared <= radius_squared_sum:
+	var radius_sum = (shape_a.radius + shape_b.radius)
+	if collision.length_squared() <= radius_sum * radius_sum:
+		var distance = collision.length()
 		var bias = biases[bias_index]
 
-		var n : float = distance_squared / radius_squared_sum
+		var n : float = distance / radius_sum
 		if n < 0.9:
 			n = 0.9
-		var damping : float = (1.0 - n) * 0.75
+		var damping : float = (1.0 - n) * 0.2
+		if damping < 0.0:
+			damping = 0.0
 		
-		var ratio_a : float = float(shape_a.radius * shape_a.radius) / radius_squared_sum
-		var ratio_b : float = float(shape_b.radius * shape_b.radius) / radius_squared_sum
+		var ratio_a : float = shape_a.radius / radius_sum
+		var ratio_b : float = shape_b.radius / radius_sum
 		
 		# Push the objects away from eachother
 		object_a.position -= (collision * ratio_b) * damping + bias
@@ -79,11 +81,11 @@ func solve_collision_plane_sphere(plane : VerletPlane3D, sphere : VerletSphere3D
 	# only check for collision when above plane
 	if normal_scale >= 0.0:
 		var plane_normal_scaled = plane_normal * normal_scale
-		var plane_normal_scaled_length = plane_normal_scaled.length()
+		var plane_normal_scaled_length = plane_normal_scaled.length_squared()
 		var radius_squared = sphere_shape.radius * sphere_shape.radius
 		var diff = plane_normal_scaled_length - radius_squared
 		if diff <= 0:
-			sphere.position += plane_normal * abs(diff) * 0.02
+			sphere.position += plane_normal * abs(diff) * 0.04
 			sphere.friction = 0.98
 	#var collision_vector = (sphere.position - plane_normal_scaled)
 	#print("collision_vector: ", collision_vector, "  plane_normal_scaled: ", plane_normal_scaled)
