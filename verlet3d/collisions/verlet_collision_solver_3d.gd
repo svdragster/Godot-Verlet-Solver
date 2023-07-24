@@ -83,8 +83,8 @@ func solve_collision_plane_sphere(plane : VerletPlane3D, sphere : VerletSphere3D
 		var radius_squared = sphere_shape.radius * sphere_shape.radius
 		var diff = plane_normal_scaled_length - radius_squared
 		if diff <= 0:
-			print(abs(diff))
-			sphere.position += plane_normal * abs(diff) * 0.01
+			sphere.position += plane_normal * abs(diff) * 0.02
+			sphere.friction = 0.98
 	#var collision_vector = (sphere.position - plane_normal_scaled)
 	#print("collision_vector: ", collision_vector, "  plane_normal_scaled: ", plane_normal_scaled)
 	#var plane_rotation : Vector3 = Vector3(1, 0, 1)

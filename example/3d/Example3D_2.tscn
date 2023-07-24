@@ -23,20 +23,43 @@ sky = SubResource("Sky_lg003")
 script = ExtResource("1_ld7fk")
 
 [node name="VerletSolver3D" parent="." instance=ExtResource("2_p86lk")]
-gravity = Vector3(0, -5, 0)
 
 [node name="VerletSphere3D" parent="VerletSolver3D" instance=ExtResource("3_tko6a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 3.5, -5)
 
+[node name="VerletSphere3D2" parent="VerletSolver3D" instance=ExtResource("3_tko6a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.30916, 3.5, -3.24784)
+
+[node name="VerletSphere3D3" parent="VerletSolver3D" instance=ExtResource("3_tko6a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.929282, 2.57469, -3.24784)
+
+[node name="VerletSphere3D4" parent="VerletSolver3D" instance=ExtResource("3_tko6a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.929282, 2.83187, -5.97464)
+
+[node name="VerletSphere3D7" parent="VerletSolver3D" instance=ExtResource("3_tko6a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3725, 2.99827, -7.88611)
+
+[node name="VerletSphere3D5" parent="VerletSolver3D" instance=ExtResource("3_tko6a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.07016, 9.462, -5.97464)
+
+[node name="VerletSphere3D6" parent="VerletSolver3D" instance=ExtResource("3_tko6a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.37903, 12.462, -7.83725)
+
 [node name="VerletPlane3D" parent="VerletSolver3D" instance=ExtResource("3_xi7gj")]
 transform = Transform3D(9.65926, 0.258819, -2.3066e-08, -2.5, 0.933013, -2.58819, -0.669873, 0.25, 9.65926, 1, 0, 0)
+
+[node name="VerletPlane3D2" parent="VerletSolver3D" instance=ExtResource("3_xi7gj")]
+transform = Transform3D(9.86673, -0.127285, 1.0137, 1.4829, 0.959843, -2.38142, -0.669873, 0.25, 9.65926, 1, 0, 0)
+
+[node name="VerletPlane3D3" parent="VerletSolver3D" instance=ExtResource("3_xi7gj")]
+transform = Transform3D(9.84736, 0.0138901, 1.73498, -0.824142, 0.915195, 3.94495, -1.53305, -0.402772, 9.0237, 1, 0, 4)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.932784, -1.57552e-08, 0.360436, -0.354327, -0.183334, 0.916974, 0.0660802, -0.983051, -0.171011, 0, 2, 0)
 shadow_enabled = true
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.99558, -0.0131227, 0.0929959, -0.0469586, 0.787976, 0.613913, -0.0813347, -0.615567, 0.783877, 0.722088, 4.43193, 6.23248)
+transform = Transform3D(1, 0, 0, 0, 0.791416, 0.611278, 0, -0.611278, 0.791416, 0.722088, 5.43193, 7.23248)
 fov = 83.1347
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
