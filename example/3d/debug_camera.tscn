@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bnk7pkj2k3gjf"]
+
+[ext_resource type="Script" path="res://example/3d/debug_camera.gd" id="1_dksfw"]
+[ext_resource type="Script" path="res://example/3d/DebugDraw.gd" id="2_ardae"]
+
+[node name="DebugCamera3D" type="Camera3D"]
+script = ExtResource("1_dksfw")
+
+[node name="DebugDraw" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_ardae")

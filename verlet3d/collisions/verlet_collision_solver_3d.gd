@@ -44,10 +44,10 @@ func solve_collision(object_a : VerletObject3D, object_b : VerletObject3D) -> vo
 
 func solve_collision_spheres(object_a : VerletObject3D, object_b : VerletObject3D, shape_a : SphereShape3D, shape_b : SphereShape3D) -> void:
 	var collision : Vector3 = object_b.position - object_a.position
-	var radius_sum = (shape_a.radius + shape_b.radius)
+	var radius_sum : float = (shape_a.radius + shape_b.radius)
 	if collision.length_squared() <= radius_sum * radius_sum:
-		var distance = collision.length()
-		var bias = biases[bias_index]
+		var distance : float = collision.length()
+		var bias : Vector3 = biases[bias_index]
 
 		var n : float = distance / radius_sum
 		if n < 0.9:
@@ -78,16 +78,39 @@ func solve_collision_plane_sphere(plane : VerletPlane3D, sphere : VerletSphere3D
 	var origin_to_sphere : Vector3 = sphere.position - plane.position
 	var plane_normal : Vector3 = plane.basis.y
 	var normal_scale = origin_to_sphere.dot(plane_normal)
+	
 	# only check for collision when above plane
-	if normal_scale >= 0.0:
+	if normal_scale >= 0.0 or true:
 		var plane_normal_scaled = plane_normal * normal_scale
 		var plane_normal_scaled_length = plane_normal_scaled.length_squared()
 		var radius_squared = sphere_shape.radius * sphere_shape.radius
 		var diff = plane_normal_scaled_length - radius_squared
 		if diff <= 0:
-			sphere.position += plane_normal * abs(diff) * 0.04
-			sphere.friction = 0.98
-	#var collision_vector = (sphere.position - plane_normal_scaled)
+			var contact_position = (sphere.position - plane_normal_scaled)
+			var contact_position_plane = plane.position - contact_position
+			
+			if abs(contact_position_plane.x) <= plane.scale.x and abs(contact_position_plane.y) <= plane.scale.y and abs(contact_position_plane.z) <= plane.scale.z:
+				sphere.position += plane_normal * abs(diff) * 0.04
+				sphere.friction = 0.98
+			else:
+				
+				#if abs(contact_position_plane.x) > plane.scale.x and abs(contact_position_plane.x) < plane.scale.x + sphere_shape.radius:
+					
+				if abs(contact_position.x) > plane.scale.x:
+					contact_position.x = sign(contact_position.x) * plane.scale.x
+				contact_position_plane = plane.position - contact_position
+				
+				var diff_x = (sphere.position - contact_position_plane).length() 
+				print(plane.name, "  ", contact_position_plane, " ", )
+				if diff_x <= sphere_shape.radius:
+					sphere.position += (sphere.position - contact_position_plane).normalized() * diff_x * 0.001
+					sphere.friction = 0.98
+			
+			
+			#var plane_x : Vector3 = plane.basis.x
+			#var plane_z : Vector3 = plane.basis.z
+			#print(origin_to_sphere.dot(plane_x), " ", origin_to_sphere.dot(plane_z))
+	#
 	#print("collision_vector: ", collision_vector, "  plane_normal_scaled: ", plane_normal_scaled)
 	#var plane_rotation : Vector3 = Vector3(1, 0, 1)
 	#var angle : float = origin_to_sphere.angle_to(plane_rotation)
