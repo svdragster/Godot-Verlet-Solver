@@ -4,9 +4,12 @@ A Verlet Algorithm implemented in Godot 4 with some examples. My long term goal 
 ## Example
 When running the simulation with the exact same input, the circles will always end up in the same positions with the same rotations:
 
-https://github.com/svdragster/GodotVerletSolver/assets/3999238/b18fa05c-b629-477a-86df-e77f8f8b2550
+[Godot Verlet 2D](https://github.com/svdragster/GodotVerletSolver/assets/3999238/b18fa05c-b629-477a-86df-e77f8f8b2550)
 
-Examples can be found in the `example` directory.
+[Godot Verlet 3D](https://github.com/svdragster/GodotVerletSolver/assets/3999238/56a8d274-0d0c-4f7c-bf7f-9cfd41261088)
+
+
+Examples can be found in the `example` directory. (3D solver is currently developed in `3d` branch)
 
 ## How it works
 
@@ -45,10 +48,10 @@ if contact_amount >= 1:
 2. Currently, Godot 64-bit double-precision floats are used for calculations (equal to double in C++). For data structures such as Vector2 and Vector3, Godot uses 32-bit floating-point numbers (Source: https://docs.godotengine.org/de/stable/classes/class_float.html). This could result in different behaviour on different machines. My long term goal is to use fixed point numbers so the calculations will behave the same on all systems.
 
 ## Goals
-Not necessarily in order
-- [ ] support more shapes for collisions
+These are somwhat in order
+- [ ] WIP: support more shapes for collisions (2d currently supports spheres and rectangles, see directory `verlet2d/shapes`)
+- [ ] WIP: 3d implementation (see branch `3d` [https://github.com/svdragster/GodotVerletSolver/tree/3d/verlet3d](https://github.com/svdragster/GodotVerletSolver/tree/3d/verlet3d))
+- [ ] add fixed point numbers
 - [ ] use chunk system for collisions
 - [ ] multithreading chunks
-- [ ] 3d implementation
-- [ ] add fixed point numbers
 - [ ] Implement in GDExtension (C++) for better performance
