@@ -10,6 +10,7 @@ var collision_solver := VerletCollisionSolver3D.new()
 var constraint_list := []
 
 func _ready() -> void:
+	collision_solver.debug_draw = get_node("/root/Example3D_1/DebugCamera3D/DebugDraw")
 	set_physics_process(true)
 
 func _physics_process(delta : float) -> void:

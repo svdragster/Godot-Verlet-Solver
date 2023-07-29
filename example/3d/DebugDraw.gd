@@ -2,6 +2,7 @@ extends Control
 
 @onready var camera : Camera3D = get_parent()
 var debug_vectors : Array = []
+var single_debug_vectors : Array = []
 
 class Vector:
 	var from : Vector3
@@ -47,6 +48,9 @@ func _process(delta):
 func _draw():
 	for vector in debug_vectors:
 		vector.draw(self, camera)
+	for vector in single_debug_vectors:
+		vector.draw(self, camera)
+	single_debug_vectors.clear()
 
 func draw_triangle(pos, dir, size, color):
 	var a = pos + dir * size
@@ -55,8 +59,11 @@ func draw_triangle(pos, dir, size, color):
 	var points = PackedVector2Array([a, b, c])
 	draw_polygon(points, PackedColorArray([color]))
 
-func add_vector(from, to, width, color):
-	debug_vectors.append(Vector.new(from, to, width, color))
+func add_vector(from, to, width, color, once=false):
+	if once:
+		single_debug_vectors.append(Vector.new(from, to, width, color))
+	else:
+		debug_vectors.append(Vector.new(from, to, width, color))
 	
 func add_vector_object(object, property, scale, width, color):
 	debug_vectors.append(VectorObject.new(object, property, scale, width, color))

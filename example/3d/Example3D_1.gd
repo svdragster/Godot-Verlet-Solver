@@ -11,4 +11,4 @@ func _process(delta):
 		var sphere = preload("res://verlet3d/shapes/verlet_sphere_3d.tscn").instantiate()
 		sphere.position = Vector3(0, 4, 0)
 		$VerletSolver3D.add_child(sphere)
-	$VerletSolver3D/VerletSphere3D2.acceleration = Vector3(-1, 0, 0)
+	#$VerletSolver3D/VerletSphere3D2.acceleration = Vector3(-1, 0, 0)
