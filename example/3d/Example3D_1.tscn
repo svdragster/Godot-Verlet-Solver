@@ -24,22 +24,25 @@ sky = SubResource("Sky_lg003")
 script = ExtResource("1_6jre3")
 
 [node name="DebugCamera3D" parent="." instance=ExtResource("5_6k03g")]
-transform = Transform3D(1, 0, 0, 0, 0.956565, 0.29152, 0, -0.29152, 0.956565, -1.75987, 3.37685, 3.78205)
+transform = Transform3D(1, 0, 0, 0, 0.528839, 0.848722, 0, -0.848722, 0.528839, -1.75987, 4.48497, 2.53139)
+rotation_edit_mode = 2
 
 [node name="VerletSolver3D" parent="." instance=ExtResource("1_ovomk")]
-gravity = Vector3(0, -1, 0)
+gravity = Vector3(0, -8, 0)
 
 [node name="VerletSphere3D2" parent="VerletSolver3D" instance=ExtResource("2_alocn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.08994, 2.83392, 1.65414)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.263786, 3.35342, 0.302129)
 
 [node name="VerletPlane3D" parent="VerletSolver3D" instance=ExtResource("4_3j2pk")]
-transform = Transform3D(1.97946, -0.285879, 0, 0.285879, 1.97946, 0, 0, 0, 2, 0, 2.3, 0)
-rotation_edit_mode = 2
+transform = Transform3D(1.30815, -0.682747, 1.35003, 0.821414, 1.8193, 0.124138, -1.27044, 0.473273, 1.47037, -0.861167, 2.33383, -0.145431)
 is_static = true
 
 [node name="VerletPlane3D2" parent="VerletSolver3D" instance=ExtResource("4_3j2pk")]
-transform = Transform3D(1.73376, -0.250395, 0.965067, 0.285879, 1.97946, 7.05735e-09, -0.955155, 0.137946, 1.75175, -4.23894, 2.3, 0.326569)
-rotation_edit_mode = 2
+transform = Transform3D(1.15483, 0.209091, 1.61946, 0.296938, 1.92357, -0.460104, -1.60567, 0.506111, 1.07966, -3.76371, 2.03241, -0.29974)
+is_static = true
+
+[node name="VerletPlane3D3" parent="VerletSolver3D" instance=ExtResource("4_3j2pk")]
+transform = Transform3D(-1.26587, 0.533753, 1.4535, 0.266135, 1.92448, -0.474924, -1.52536, -0.107182, -1.2891, -3.45789, 1.97222, 3.00682)
 is_static = true
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]

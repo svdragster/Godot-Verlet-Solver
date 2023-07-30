@@ -87,10 +87,31 @@ func solve_collision_plane_sphere(plane : VerletPlane3D, sphere : VerletSphere3D
 	
 	var plane_local_contact_position : Vector3 = plane_contact_position - plane.position
 	
-	if abs(plane_local_contact_position.x) > plane.scale.x or abs(plane_local_contact_position.z) > plane.scale.z:
+	# Invert basis rotation so we can check if the contact position is within the AABB of the plane
+	var contact_position_inverted = Vector3(plane_local_contact_position)
+	contact_position_inverted = plane.basis.inverse() * contact_position_inverted * plane.scale
+	
+	var aabb = AABB()
+	var plane_scale = Vector3(plane.scale)
+	plane_scale.y = 0.2
+	aabb.position = plane.position + plane_scale
+	aabb.end = plane.position - plane_scale
+	aabb = aabb.abs()
+	var plane_basis_inverted = plane.basis.inverse()
+	#for i in range(1, 8):
+	#	for j in range(1, 8):
+	#		debug_draw.add_vector(aabb.get_endpoint(i), aabb.get_endpoint(j), 2, Color.BLUE_VIOLET, true)
+	
+	#debug_draw.add_vector(plane.position, aabb.position, 4, Color.PURPLE, true)
+	#debug_draw.add_vector(plane.position, aabb.end, 4, Color.PURPLE, true)
+	
+	if not aabb.has_point(plane.position + contact_position_inverted):
 		# We are outside of the planes bounds. Let's check for collisions with the edges of the plane
 		
-		var edges = [
+		#debug_draw.add_vector(plane.position, plane.position + contact_position_inverted, 4, Color.PURPLE, true)
+		
+		var edge_id := 0
+		var edges := [
 			[plane.position + plane.basis.x + plane.basis.z, plane.position + plane.basis.x - plane.basis.z], # positive x edge of plane
 			[plane.position - plane.basis.x - plane.basis.z, plane.position - plane.basis.x + plane.basis.z], # negative x edge of plane
 			[plane.position + plane.basis.z - plane.basis.x, plane.position + plane.basis.z + plane.basis.x], # positive z edge of plane
@@ -99,34 +120,49 @@ func solve_collision_plane_sphere(plane : VerletPlane3D, sphere : VerletSphere3D
 		for edge in edges:
 			var edge_a : Vector3 = edge[0]
 			var edge_b : Vector3  = edge[1]
-			var edge_direction : Vector3  = (edge_b - edge_a).normalized()
+			var edge_vector : Vector3 = edge_b - edge_a
+			var edge_length : float = edge_vector.length()
+			var edge_direction : Vector3  = edge_vector / edge_length
 			var edge_to_sphere : Vector3  = sphere.position - edge_a
 			
 			var edge_scale : float = edge_to_sphere.dot(edge_direction)
-			debug_draw.add_vector(edge_a, edge_a + edge_direction * edge_scale, 4, Color.RED, true)
+			#if plane.name == "VerletPlane3D2":
+			#	print(edge_id, "\tedge_scale: ", edge_scale)
+			if edge_scale > edge_length:
+				edge_scale = edge_length
+			elif edge_scale < 0.0:
+				edge_scale = 0.0
+			
+			#debug_draw.add_vector(edge_a, edge_a + edge_direction * edge_scale, 4, Color.RED, true)
 			
 			var edge_scaled : Vector3 = (edge_a + edge_direction * edge_scale)
 			
 			var sphere_to_edge_contact : Vector3 = sphere.position - edge_scaled
 			var sphere_to_edge_contact_distance : float = sphere_to_edge_contact.length_squared()
 			var edge_contact_distance_squared : float = sphere_to_edge_contact_distance - sphere_shape.radius * sphere_shape.radius
+			#if plane.name == "VerletPlane3D2":
+			#	print(edge_id, "\tdistance: ", sqrt(abs(edge_contact_distance_squared)))
 			if edge_contact_distance_squared <= 0:
-				debug_draw.add_vector(edge_a + edge_direction * edge_scale, sphere.position, 4, Color.RED, true)
+				#debug_draw.add_vector(edge_a + edge_direction * edge_scale, sphere.position, 4, Color.RED, true)
 				sphere.position += sphere_to_edge_contact.normalized() * sqrt(abs(edge_contact_distance_squared)) * 0.02
 				sphere.friction = 0.98
+			edge_id += 1
 		
 	else:
 		# We are inside of the planes bounds. Check if the sphere is close enough to the plane
+		
+		#debug_draw.add_vector(plane.position, plane.position + contact_position_inverted, 4, Color.LIGHT_BLUE, true)
+		
 		var contact_distance_squared : float = contact_vector.length_squared() - sphere_shape.radius * sphere_shape.radius
 		if contact_distance_squared <= 0:
 			# Collision
-			debug_draw.add_vector(plane_contact_position, sphere.position, 4, Color.RED, true)
+			#debug_draw.add_vector(plane_contact_position, sphere.position, 4, Color.RED, true)
 			sphere.position += plane_normal * sqrt(abs(contact_distance_squared)) * 0.02
 			sphere.friction = 0.98
 		else:
 			# No collision
 			pass
-			debug_draw.add_vector(plane_contact_position, sphere.position, 4, Color.GREEN, true)
+			#debug_draw.add_vector(plane_contact_position, sphere.position, 4, Color.GREEN, true)
 	
 	
 
