@@ -1,0 +1,65 @@
+[gd_scene load_steps=9 format=3 uid="uid://cij0jhy5boen"]
+
+[ext_resource type="Script" path="res://example/3d/Example3D_1.gd" id="1_f41bn"]
+[ext_resource type="PackedScene" uid="uid://bnk7pkj2k3gjf" path="res://example/3d/debug_camera.tscn" id="2_nojxc"]
+[ext_resource type="PackedScene" uid="uid://1ic0f4wrfth0" path="res://verlet3d/verlet_solver_3d.tscn" id="3_n38mf"]
+[ext_resource type="PackedScene" uid="uid://c2dtbsgpnlcnq" path="res://verlet3d/shapes/verlet_sphere_3d.tscn" id="4_j01jo"]
+[ext_resource type="PackedScene" uid="uid://r2xyc2uxjpcn" path="res://verlet3d/shapes/verlet_plane_3d.tscn" id="5_dxeur"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_smfak"]
+sky_top_color = Color(0.298039, 0.443137, 0.717647, 1)
+sky_horizon_color = Color(0.513726, 0.678431, 0.803922, 1)
+ground_bottom_color = Color(0.0941176, 0.0784314, 0.0666667, 1)
+ground_horizon_color = Color(0.615686, 0.388235, 0.294118, 1)
+ground_curve = 0.00378927
+
+[sub_resource type="Sky" id="Sky_lg003"]
+sky_material = SubResource("ProceduralSkyMaterial_smfak")
+
+[sub_resource type="Environment" id="Environment_j7owh"]
+background_mode = 2
+sky = SubResource("Sky_lg003")
+
+[node name="Example3D_3" type="Node3D"]
+script = ExtResource("1_f41bn")
+
+[node name="DebugCamera3D" parent="." instance=ExtResource("2_nojxc")]
+transform = Transform3D(1, 0, 0, 0, 0.528839, 0.848722, 0, -0.848722, 0.528839, -1.75987, 4.48497, 2.53139)
+rotation_edit_mode = 2
+
+[node name="VerletSolver3D" parent="." instance=ExtResource("3_n38mf")]
+gravity = Vector3(0, -8, 0)
+
+[node name="VerletSphere3D2" parent="VerletSolver3D" instance=ExtResource("4_j01jo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.263786, 3.35342, 0.302129)
+
+[node name="VerletPlane3D" parent="VerletSolver3D" instance=ExtResource("5_dxeur")]
+transform = Transform3D(0.682907, -1.53555, 1.0843, 1.3855, 1.19083, 0.81381, -1.27044, 0.473273, 1.47037, -0.861167, 1.74628, -0.145431)
+is_static = true
+
+[node name="VerletPlane3D5" parent="VerletSolver3D" instance=ExtResource("5_dxeur")]
+transform = Transform3D(0.855184, 0.972797, 1.52391, -0.970309, 1.6694, -0.521155, -1.5255, -0.516488, 1.18578, -1.75078, 0.8006, 5.78927)
+is_static = true
+
+[node name="VerletPlane3D6" parent="VerletSolver3D" instance=ExtResource("5_dxeur")]
+transform = Transform3D(1.35919, 0.110304, 1.46302, 0.420009, 1.88161, -0.532068, -1.40577, 0.668833, 1.25557, 0.293351, -0.571633, 4.50091)
+is_static = true
+
+[node name="VerletPlane3D2" parent="VerletSolver3D" instance=ExtResource("5_dxeur")]
+transform = Transform3D(0.522351, 1.87197, 0.472071, -1.2991, 0.702583, -1.34859, -1.42811, 0.0455878, 1.39944, -2.08462, 1.74628, -0.145431)
+is_static = true
+
+[node name="VerletPlane3D3" parent="VerletSolver3D" instance=ExtResource("5_dxeur")]
+transform = Transform3D(0.233191, 1.97332, 0.227216, 0.364625, 0.182364, -1.958, -1.9526, 0.26972, -0.338494, -1.58086, -1.49108, 1.93781)
+is_static = true
+
+[node name="VerletPlane3D4" parent="VerletSolver3D" instance=ExtResource("5_dxeur")]
+transform = Transform3D(0.233191, 1.97332, 0.227216, 0.364625, 0.182364, -1.958, -1.9526, 0.26972, -0.338494, -1.0617, -1.49108, 1.93781)
+is_static = true
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.932784, -1.57552e-08, 0.360436, -0.354327, -0.183334, 0.916974, 0.0660802, -0.983051, -0.171011, 0, 2, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_j7owh")

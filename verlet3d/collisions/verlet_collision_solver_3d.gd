@@ -43,6 +43,12 @@ func solve_collision(object_a : VerletObject3D, object_b : VerletObject3D) -> vo
 	elif object_a.shape is SphereShape3D and object_b is VerletPlane3D:
 		# Sphere <-> Plane
 		solve_collision_plane_sphere(object_b, object_a, object_a.shape)
+	elif object_a.shape is SphereShape3D and object_b.shape is BoxShape3D:
+		# Sphere <-> Box
+		solve_collision_sphere_box(object_a, object_b, object_a.shape, object_b.shape)
+	elif object_a.shape is BoxShape3D and object_b.shape is SphereShape3D:
+		# Box <-> Sphere
+		solve_collision_sphere_box(object_b, object_a, object_b.shape, object_a.shape)
 
 func solve_collision_spheres(object_a : VerletObject3D, object_b : VerletObject3D, shape_a : SphereShape3D, shape_b : SphereShape3D) -> void:
 	var collision : Vector3 = object_b.position - object_a.position
@@ -97,13 +103,7 @@ func solve_collision_plane_sphere(plane : VerletPlane3D, sphere : VerletSphere3D
 	aabb.position = plane.position + plane_scale
 	aabb.end = plane.position - plane_scale
 	aabb = aabb.abs()
-	var plane_basis_inverted = plane.basis.inverse()
-	#for i in range(1, 8):
-	#	for j in range(1, 8):
-	#		debug_draw.add_vector(aabb.get_endpoint(i), aabb.get_endpoint(j), 2, Color.BLUE_VIOLET, true)
-	
-	#debug_draw.add_vector(plane.position, aabb.position, 4, Color.PURPLE, true)
-	#debug_draw.add_vector(plane.position, aabb.end, 4, Color.PURPLE, true)
+
 	
 	if not aabb.has_point(plane.position + contact_position_inverted):
 		# We are outside of the planes bounds. Let's check for collisions with the edges of the plane
@@ -166,16 +166,121 @@ func solve_collision_plane_sphere(plane : VerletPlane3D, sphere : VerletSphere3D
 	
 	
 
-func solve_collision_sphere_box(object_sphere : VerletObject3D, object_box : VerletObject3D, sphere : SphereShape3D, box : BoxShape3D) -> void:
-	var box_vertices_offsets = [
-		Vector3(-1, -1, -1),
-		Vector3(-1, -1,  1),
-		Vector3(-1,  1, -1),
-		Vector3(-1,  1,  1),
-		Vector3( 1, -1, -1),
-		Vector3( 1, -1,  1),
-		Vector3( 1,  1, -1),
-		Vector3( 1,  1,  1),
+func solve_collision_sphere_box(sphere : VerletObject3D, box : VerletObject3D, sphere_shape : SphereShape3D, box_shape : BoxShape3D) -> void:
+	var origin_to_sphere : Vector3 = sphere.position - box.position
+	var faces : Array = [
+		[box.basis.y/2, Basis(box.basis)],
+		-box.basis.y/2,
+		box.basis.x/2,
+		-box.basis.x/2,
+		box.basis.z/2,
+		-box.basis.z/2,
 	]
-	for vertex_offset in box_vertices_offsets:
-		var size_adjusted_offset = vertex_offset * box.size
+	var box_basis_list : Array[Basis] = [
+		Basis(box.basis.x, box.basis.y, box.basis.z),
+		Basis(box.basis.x, -box.basis.y, box.basis.z),
+		Basis(box.basis.y, box.basis.x, box.basis.z),
+		Basis(box.basis.y, -box.basis.x, box.basis.z),
+		Basis(box.basis.x, box.basis.z, box.basis.y),
+		Basis(box.basis.x, -box.basis.z, box.basis.y),
+	]
+	var face_collision_success := false
+	for box_basis in box_basis_list:
+		var plane_offset = box_basis.y/2
+		var plane_position = box.position + plane_offset
+		var plane_normal = box_basis.y.normalized()
+		var plane_to_sphere : Vector3 = sphere.position - (box.position + plane_offset)
+		var sphere_distance_to_plane : float = plane_to_sphere.dot(plane_normal)
+		var contact_vector : Vector3  = plane_normal * sphere_distance_to_plane
+		var plane_contact_position : Vector3  = sphere.position - contact_vector
+		
+		var aabb = AABB()
+		var plane_scale = Vector3(box_basis.x.length(), 0.2, box_basis.z.length())
+		
+		aabb.position = plane_position + plane_scale
+		aabb.end = plane_position - plane_scale
+		aabb = aabb.abs()
+		
+		debug_draw.add_vector(box.position + plane_offset, plane_contact_position, 4, Color.RED, true)
+		debug_draw.add_vector(plane_contact_position, sphere.position, 4, Color.RED, true)
+		
+#	for face in faces:
+#		var face_offset = face[0]
+#		var plane_position = box.position + face_offset
+#		var plane_normal : Vector3 = face_offset.normalized()
+#
+#		var sphere_distance_to_plane : float = origin_to_sphere.dot(plane_normal)  
+#
+#		var contact_vector : Vector3  = plane_normal * sphere_distance_to_plane
+#		var plane_contact_position : Vector3  = sphere.position - contact_vector
+#
+#		var plane_local_contact_position : Vector3 = plane_contact_position - plane_position
+#
+#		# Invert basis rotation so we can check if the contact position is within the AABB of the plane
+#		var contact_position_inverted = Vector3(plane_local_contact_position)
+#		contact_position_inverted = plane.basis.inverse() * contact_position_inverted * plane.scale
+#
+#		var aabb = AABB()
+#		var plane_scale = Vector3(plane.scale)
+#		plane_scale.y = 0.2
+#		aabb.position = plane.position + plane_scale
+#		aabb.end = plane.position - plane_scale
+#		aabb = aabb.abs()
+#
+#		if aabb.has_point(plane.position + contact_position_inverted):
+#			face_collision_success = true
+#			var contact_distance_squared : float = contact_vector.length_squared() - sphere_shape.radius * sphere_shape.radius
+#			if contact_distance_squared <= 0:
+#				# Collision
+#				#debug_draw.add_vector(plane_contact_position, sphere.position, 4, Color.RED, true)
+#				sphere.position += plane_normal * sqrt(abs(contact_distance_squared)) * 0.02
+#				sphere.friction = 0.98
+#			else:
+#				# No collision
+#				pass
+#				#debug_draw.add_vector(plane_contact_position, sphere.position, 4, Color.GREEN, true)
+			
+	
+	if not face_collision_success:
+		# We are outside of the planes bounds. Let's check for collisions with the edges of the plane
+		
+		#debug_draw.add_vector(plane.position, plane.position + contact_position_inverted, 4, Color.PURPLE, true)
+		
+		var edge_id := 0
+		var edges := [
+			#[plane.position + plane.basis.x + plane.basis.z, plane.position + plane.basis.x - plane.basis.z], # positive x edge of plane
+			#[plane.position - plane.basis.x - plane.basis.z, plane.position - plane.basis.x + plane.basis.z], # negative x edge of plane
+			#[plane.position + plane.basis.z - plane.basis.x, plane.position + plane.basis.z + plane.basis.x], # positive z edge of plane
+			#[plane.position - plane.basis.z + plane.basis.x, plane.position - plane.basis.z - plane.basis.x], # negative z edge of plane
+		]
+		for edge in edges:
+			var edge_a : Vector3 = edge[0]
+			var edge_b : Vector3  = edge[1]
+			var edge_vector : Vector3 = edge_b - edge_a
+			var edge_length : float = edge_vector.length()
+			var edge_direction : Vector3  = edge_vector / edge_length
+			var edge_to_sphere : Vector3  = sphere.position - edge_a
+			
+			var edge_scale : float = edge_to_sphere.dot(edge_direction)
+			#if plane.name == "VerletPlane3D2":
+			#	print(edge_id, "\tedge_scale: ", edge_scale)
+			if edge_scale > edge_length:
+				edge_scale = edge_length
+			elif edge_scale < 0.0:
+				edge_scale = 0.0
+			
+			#debug_draw.add_vector(edge_a, edge_a + edge_direction * edge_scale, 4, Color.RED, true)
+			
+			var edge_scaled : Vector3 = (edge_a + edge_direction * edge_scale)
+			
+			var sphere_to_edge_contact : Vector3 = sphere.position - edge_scaled
+			var sphere_to_edge_contact_distance : float = sphere_to_edge_contact.length_squared()
+			var edge_contact_distance_squared : float = sphere_to_edge_contact_distance - sphere_shape.radius * sphere_shape.radius
+			#if plane.name == "VerletPlane3D2":
+			#	print(edge_id, "\tdistance: ", sqrt(abs(edge_contact_distance_squared)))
+			if edge_contact_distance_squared <= 0:
+				#debug_draw.add_vector(edge_a + edge_direction * edge_scale, sphere.position, 4, Color.RED, true)
+				sphere.position += sphere_to_edge_contact.normalized() * sqrt(abs(edge_contact_distance_squared)) * 0.02
+				sphere.friction = 0.98
+			edge_id += 1
+
