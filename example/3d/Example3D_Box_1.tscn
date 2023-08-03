@@ -31,10 +31,14 @@ rotation_edit_mode = 2
 gravity = Vector3(0, 0, 0)
 
 [node name="VerletBox3D" parent="VerletSolver3D" instance=ExtResource("4_qr3du")]
-transform = Transform3D(1, 0, 0, 0, 1.25, 0, 0, 0, 1, 0, 0, 0)
+transform = Transform3D(0.984808, 0.0376921, 0.239414, 0, 1.23101, -0.243107, -0.173648, 0.213763, 1.35778, 0, 1.08483, 0)
 
 [node name="VerletSphere3D" parent="VerletSolver3D" instance=ExtResource("5_xqqsx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.274778, 1.3, -0.273837)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.150384, -0.400881, -0.197225)
+
+[node name="VerletSphere3D2" parent="VerletSolver3D" instance=ExtResource("5_xqqsx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.38208, 1.3, -0.887675)
+visible = false
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.932784, -1.57552e-08, 0.360436, -0.354327, -0.183334, 0.916974, 0.0660802, -0.983051, -0.171011, 0, 2, 0)

@@ -167,6 +167,8 @@ func solve_collision_plane_sphere(plane : VerletPlane3D, sphere : VerletSphere3D
 	
 
 func solve_collision_sphere_box(sphere : VerletObject3D, box : VerletObject3D, sphere_shape : SphereShape3D, box_shape : BoxShape3D) -> void:
+	if not sphere.is_visible_in_tree():
+		return
 	var origin_to_sphere : Vector3 = sphere.position - box.position
 	var faces : Array = [
 		[box.basis.y/2, Basis(box.basis)],
@@ -176,7 +178,7 @@ func solve_collision_sphere_box(sphere : VerletObject3D, box : VerletObject3D, s
 		box.basis.z/2,
 		-box.basis.z/2,
 	]
-	var box_basis_list : Array[Basis] = [
+	var plane_basis_list : Array[Basis] = [
 		Basis(box.basis.x, box.basis.y, box.basis.z),
 		Basis(box.basis.x, -box.basis.y, box.basis.z),
 		Basis(box.basis.y, box.basis.x, box.basis.z),
@@ -185,24 +187,44 @@ func solve_collision_sphere_box(sphere : VerletObject3D, box : VerletObject3D, s
 		Basis(box.basis.x, -box.basis.z, box.basis.y),
 	]
 	var face_collision_success := false
-	for box_basis in box_basis_list:
-		var plane_offset = box_basis.y/2
+	for plane_basis in plane_basis_list:
+		var plane_offset = plane_basis.y/2
 		var plane_position = box.position + plane_offset
-		var plane_normal = box_basis.y.normalized()
+		var plane_normal = plane_basis.y.normalized()
+		var plane_x = plane_basis.x/2
+		var plane_z = plane_basis.z/2
 		var plane_to_sphere : Vector3 = sphere.position - (box.position + plane_offset)
 		var sphere_distance_to_plane : float = plane_to_sphere.dot(plane_normal)
-		var contact_vector : Vector3  = plane_normal * sphere_distance_to_plane
+		
+		if sphere_distance_to_plane < 0:
+			continue
+		
+		var contact_vector : Vector3 = plane_normal * sphere_distance_to_plane
 		var plane_contact_position : Vector3  = sphere.position - contact_vector
+		var plane_contact_local_position : Vector3 = plane_contact_position - (box.position + plane_offset)
 		
-		var aabb = AABB()
-		var plane_scale = Vector3(box_basis.x.length(), 0.2, box_basis.z.length())
+		var contact_x_scale = plane_x.dot(plane_contact_local_position) / plane_x.length()
+		var contact_z_scale = plane_z.dot(plane_contact_local_position) / plane_z.length()
+		var contact_x = plane_x.normalized() * contact_x_scale
+		var contact_z = plane_z.normalized() * contact_z_scale
 		
-		aabb.position = plane_position + plane_scale
-		aabb.end = plane_position - plane_scale
-		aabb = aabb.abs()
 		
-		debug_draw.add_vector(box.position + plane_offset, plane_contact_position, 4, Color.RED, true)
-		debug_draw.add_vector(plane_contact_position, sphere.position, 4, Color.RED, true)
+		if contact_x_scale*contact_x_scale > plane_x.length_squared():
+			continue
+		if contact_z_scale*contact_z_scale > plane_z.length_squared():
+			continue
+		
+		debug_draw.add_vector(box.position + plane_offset, box.position + plane_offset + contact_z, 3, Color.GREEN_YELLOW, true)
+		debug_draw.add_vector(box.position + plane_offset, box.position + plane_offset + contact_x, 3, Color.GREEN_YELLOW, true)
+		
+		debug_draw.add_vector(box.position + plane_offset, plane_contact_position, 2, Color.RED, true)
+		debug_draw.add_vector(plane_contact_position, sphere.position, 2, Color.RED, true)
+		
+		#debug_draw.add_vector(box.position + plane_offset, box.position + plane_offset + plane_x, 2, Color.AQUA, true)
+		#debug_draw.add_vector(box.position + plane_offset, box.position + plane_offset + plane_offset, 2, Color.BLUE, true)
+		#debug_draw.add_vector(box.position + plane_offset, box.position + plane_offset + plane_z, 2, Color.AQUA, true)
+		
+		
 		
 #	for face in faces:
 #		var face_offset = face[0]
