@@ -26,24 +26,24 @@ func _ready():
 #	for b in box_basis_list:
 #		get_node("/root/Example3D_Box_1/DebugCamera3D/DebugDraw").add_vector(position + b.y/2, position + b.y*1.5, 4, Color.BLUE)
 	
-	# Top edges of this box
-	get_node("/root/Example3D_Box_1/DebugCamera3D/DebugDraw").add_vector(position + basis.y/2 + basis.x/2 + basis.z/2, position + basis.y/2 + basis.x/2 - basis.z/2, 2, Color.ORANGE_RED)
-	get_node("/root/Example3D_Box_1/DebugCamera3D/DebugDraw").add_vector(position + basis.y/2 + basis.x/2 - basis.z/2, position + basis.y/2 - basis.x/2 - basis.z/2, 2, Color.ORANGE_RED)
-	get_node("/root/Example3D_Box_1/DebugCamera3D/DebugDraw").add_vector(position + basis.y/2 - basis.x/2 - basis.z/2, position + basis.y/2 - basis.x/2 + basis.z/2, 2, Color.ORANGE_RED)
-	get_node("/root/Example3D_Box_1/DebugCamera3D/DebugDraw").add_vector(position + basis.y/2 - basis.x/2 + basis.z/2, position + basis.y/2 + basis.x/2 + basis.z/2, 2, Color.ORANGE_RED)
-	
-	# Bottom edges of this box
-	get_node("/root/Example3D_Box_1/DebugCamera3D/DebugDraw").add_vector(position - basis.y/2 + basis.x/2 + basis.z/2, position - basis.y/2 + basis.x/2 - basis.z/2, 2, Color.ORANGE_RED)
-	get_node("/root/Example3D_Box_1/DebugCamera3D/DebugDraw").add_vector(position - basis.y/2 + basis.x/2 - basis.z/2, position - basis.y/2 - basis.x/2 - basis.z/2, 2, Color.ORANGE_RED)
-	get_node("/root/Example3D_Box_1/DebugCamera3D/DebugDraw").add_vector(position - basis.y/2 - basis.x/2 - basis.z/2, position - basis.y/2 - basis.x/2 + basis.z/2, 2, Color.ORANGE_RED)
-	get_node("/root/Example3D_Box_1/DebugCamera3D/DebugDraw").add_vector(position - basis.y/2 - basis.x/2 + basis.z/2, position - basis.y/2 + basis.x/2 + basis.z/2, 2, Color.ORANGE_RED)
-	
-	# Vertical edges of this box
-	get_node("/root/Example3D_Box_1/DebugCamera3D/DebugDraw").add_vector(position - basis.y/2 + basis.x/2 + basis.z/2, position + basis.y/2 + basis.x/2 + basis.z/2, 2, Color.ORANGE_RED)
-	get_node("/root/Example3D_Box_1/DebugCamera3D/DebugDraw").add_vector(position - basis.y/2 - basis.x/2 + basis.z/2, position + basis.y/2 - basis.x/2 + basis.z/2, 2, Color.ORANGE_RED)
-	get_node("/root/Example3D_Box_1/DebugCamera3D/DebugDraw").add_vector(position - basis.y/2 - basis.x/2 - basis.z/2, position + basis.y/2 - basis.x/2 - basis.z/2, 2, Color.ORANGE_RED)
-	get_node("/root/Example3D_Box_1/DebugCamera3D/DebugDraw").add_vector(position - basis.y/2 + basis.x/2 - basis.z/2, position + basis.y/2 + basis.x/2 - basis.z/2, 2, Color.ORANGE_RED)
-	
+#	# Top edges of this box
+#	get_node("/root/Example3D_Box_1/DebugCamera3D/DebugDraw").add_vector(position + basis.y/2 + basis.x/2 + basis.z/2, position + basis.y/2 + basis.x/2 - basis.z/2, 2, Color.ORANGE_RED)
+#	get_node("/root/Example3D_Box_1/DebugCamera3D/DebugDraw").add_vector(position + basis.y/2 + basis.x/2 - basis.z/2, position + basis.y/2 - basis.x/2 - basis.z/2, 2, Color.ORANGE_RED)
+#	get_node("/root/Example3D_Box_1/DebugCamera3D/DebugDraw").add_vector(position + basis.y/2 - basis.x/2 - basis.z/2, position + basis.y/2 - basis.x/2 + basis.z/2, 2, Color.ORANGE_RED)
+#	get_node("/root/Example3D_Box_1/DebugCamera3D/DebugDraw").add_vector(position + basis.y/2 - basis.x/2 + basis.z/2, position + basis.y/2 + basis.x/2 + basis.z/2, 2, Color.ORANGE_RED)
+#
+#	# Bottom edges of this box
+#	get_node("/root/Example3D_Box_1/DebugCamera3D/DebugDraw").add_vector(position - basis.y/2 + basis.x/2 + basis.z/2, position - basis.y/2 + basis.x/2 - basis.z/2, 2, Color.ORANGE_RED)
+#	get_node("/root/Example3D_Box_1/DebugCamera3D/DebugDraw").add_vector(position - basis.y/2 + basis.x/2 - basis.z/2, position - basis.y/2 - basis.x/2 - basis.z/2, 2, Color.ORANGE_RED)
+#	get_node("/root/Example3D_Box_1/DebugCamera3D/DebugDraw").add_vector(position - basis.y/2 - basis.x/2 - basis.z/2, position - basis.y/2 - basis.x/2 + basis.z/2, 2, Color.ORANGE_RED)
+#	get_node("/root/Example3D_Box_1/DebugCamera3D/DebugDraw").add_vector(position - basis.y/2 - basis.x/2 + basis.z/2, position - basis.y/2 + basis.x/2 + basis.z/2, 2, Color.ORANGE_RED)
+#
+#	# Vertical edges of this box
+#	get_node("/root/Example3D_Box_1/DebugCamera3D/DebugDraw").add_vector(position - basis.y/2 + basis.x/2 + basis.z/2, position + basis.y/2 + basis.x/2 + basis.z/2, 2, Color.ORANGE_RED)
+#	get_node("/root/Example3D_Box_1/DebugCamera3D/DebugDraw").add_vector(position - basis.y/2 - basis.x/2 + basis.z/2, position + basis.y/2 - basis.x/2 + basis.z/2, 2, Color.ORANGE_RED)
+#	get_node("/root/Example3D_Box_1/DebugCamera3D/DebugDraw").add_vector(position - basis.y/2 - basis.x/2 - basis.z/2, position + basis.y/2 - basis.x/2 - basis.z/2, 2, Color.ORANGE_RED)
+#	get_node("/root/Example3D_Box_1/DebugCamera3D/DebugDraw").add_vector(position - basis.y/2 + basis.x/2 - basis.z/2, position + basis.y/2 + basis.x/2 - basis.z/2, 2, Color.ORANGE_RED)
+#
 
 func update(delta : float) -> void:
 	pass
