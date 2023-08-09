@@ -1,0 +1,46 @@
+[gd_scene load_steps=9 format=3 uid="uid://cb655cwxj111u"]
+
+[ext_resource type="Script" path="res://example/3d/Example3D_1.gd" id="1_0vahf"]
+[ext_resource type="PackedScene" uid="uid://bnk7pkj2k3gjf" path="res://example/3d/debug_camera.tscn" id="2_o62tp"]
+[ext_resource type="PackedScene" uid="uid://1ic0f4wrfth0" path="res://verlet3d/verlet_solver_3d.tscn" id="3_yufxt"]
+[ext_resource type="PackedScene" uid="uid://r2xyc2uxjpcn" path="res://verlet3d/shapes/verlet_plane_3d.tscn" id="4_mapka"]
+[ext_resource type="PackedScene" uid="uid://c4gmrrfbr2agv" path="res://verlet3d/shapes/verlet_box_3d.tscn" id="4_qye72"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_smfak"]
+sky_top_color = Color(0.298039, 0.443137, 0.717647, 1)
+sky_horizon_color = Color(0.513726, 0.678431, 0.803922, 1)
+ground_bottom_color = Color(0.0941176, 0.0784314, 0.0666667, 1)
+ground_horizon_color = Color(0.615686, 0.388235, 0.294118, 1)
+ground_curve = 0.00378927
+
+[sub_resource type="Sky" id="Sky_lg003"]
+sky_material = SubResource("ProceduralSkyMaterial_smfak")
+
+[sub_resource type="Environment" id="Environment_j7owh"]
+background_mode = 2
+sky = SubResource("Sky_lg003")
+
+[node name="Example3D" type="Node3D"]
+script = ExtResource("1_0vahf")
+
+[node name="DebugCamera3D" parent="." instance=ExtResource("2_o62tp")]
+transform = Transform3D(1, 0, 0, 0, 0.614658, 0.788794, 0, -0.788794, 0.614658, -0.324685, 2.11807, 2.47351)
+rotation_edit_mode = 2
+
+[node name="VerletSolver3D" parent="." instance=ExtResource("3_yufxt")]
+substeps = 4
+gravity = Vector3(0, -1, 0)
+
+[node name="VerletPlane3D" parent="VerletSolver3D" instance=ExtResource("4_mapka")]
+transform = Transform3D(2, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0)
+is_static = true
+
+[node name="VerletBox3D" parent="VerletSolver3D" instance=ExtResource("4_qye72")]
+transform = Transform3D(0.287932, 0.209168, 0.46985, 1.31383, -0.0283021, -0.127139, -0.0847458, 0.271894, -0.374689, 0, 1.17675, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.932784, -1.57552e-08, 0.360436, -0.354327, -0.183334, 0.916974, 0.0660802, -0.983051, -0.171011, 0, 2, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_j7owh")

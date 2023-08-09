@@ -20,7 +20,7 @@ sky_material = SubResource("ProceduralSkyMaterial_smfak")
 background_mode = 2
 sky = SubResource("Sky_lg003")
 
-[node name="Example3D_1" type="Node3D"]
+[node name="Example3D" type="Node3D"]
 script = ExtResource("1_6jre3")
 
 [node name="DebugCamera3D" parent="." instance=ExtResource("5_6k03g")]
@@ -28,10 +28,10 @@ transform = Transform3D(1, 0, 0, 0, 0.528839, 0.848722, 0, -0.848722, 0.528839, 
 rotation_edit_mode = 2
 
 [node name="VerletSolver3D" parent="." instance=ExtResource("1_ovomk")]
-gravity = Vector3(0, -8, 0)
+gravity = Vector3(0, -5, 0)
 
 [node name="VerletSphere3D2" parent="VerletSolver3D" instance=ExtResource("2_alocn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.263786, 3.35342, 0.302129)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.263786, 4.00381, 0.302129)
 
 [node name="VerletPlane3D" parent="VerletSolver3D" instance=ExtResource("4_3j2pk")]
 transform = Transform3D(1.30815, -0.682747, 1.35003, 0.821414, 1.8193, 0.124138, -1.27044, 0.473273, 1.47037, -0.861167, 2.33383, -0.145431)
