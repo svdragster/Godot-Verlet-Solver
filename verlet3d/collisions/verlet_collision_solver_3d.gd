@@ -209,9 +209,19 @@ func solve_collision_sphere_box(sphere : VerletObject3D, box : VerletObject3D, s
 		
 		if sphere_distance_to_plane < sphere_shape.radius:
 			# Finally, the sphere is close enough to the plane
-			#debug_draw.add_vector(plane_contact_position, sphere.position, 2, Color.GREEN, true)
-			sphere.position += plane_normal * abs(sphere_distance_to_plane - sphere_shape.radius) * 0.5
-			sphere.friction = 0.98
+			debug_draw.add_vector(plane_contact_position, sphere.position, 2, Color.GREEN, true)
+			var adjusted_distance = abs(sphere_distance_to_plane - sphere_shape.radius)
+			if not sphere.is_static:
+				sphere.position += plane_normal * adjusted_distance * 0.5
+				sphere.friction = 0.98
+			
+			if not box.is_static:
+				var rotation_axis : Vector3 = plane_contact_local_position.cross(contact_vector).normalized()
+				debug_draw.add_vector(box.position, box.position + rotation_axis, 2, Color.PURPLE, true)
+				box.angular_acceleration += -rotation_axis * 4.0
+				box.position += plane_normal * 0.0095 * adjusted_distance
+				box.friction = 0.98
+			
 			face_collision_success = true
 			break
 
@@ -263,8 +273,16 @@ func solve_collision_sphere_box(sphere : VerletObject3D, box : VerletObject3D, s
 			var edge_contact_distance_squared : float = sphere_to_edge_contact_distance - radius_squared
 			
 			if edge_contact_distance_squared <= 0:
-				sphere.position += sphere_to_edge_contact.normalized() * sqrt(abs(edge_contact_distance_squared / radius_squared)) * 0.02
-				sphere.friction = 0.98
+				var adjusted_distance = sqrt(abs(edge_contact_distance_squared / radius_squared))
+				if not sphere.is_static:
+					sphere.position += sphere_to_edge_contact.normalized() * adjusted_distance * 0.02
+					sphere.friction = 0.98
+				if not box.is_static:
+					var rotation_axis : Vector3 = sphere_to_edge_contact.normalized().cross(edge_direction).normalized()
+					debug_draw.add_vector(box.position, box.position + rotation_axis, 2, Color.AQUA, true)
+					box.angular_acceleration += -rotation_axis * 4.0
+					box.position += sphere_to_edge_contact.normalized() * 0.0095 * adjusted_distance
+					box.friction = 0.98
 				break  # since a box is convex we can break here. Only one edge will be touched at the same time
 
 
@@ -296,7 +314,7 @@ func solve_collision_plane_box(plane : VerletPlane3D, box : VerletBox3D, box_sha
 		
 		var plane_collision_success := false
 		
-		if point_distance_to_plane >= -0.05:
+		if point_distance_to_plane >= -0.04:
 			var plane_contact_local_position : Vector3 = plane_contact_position - plane.position
 			
 			var contact_x_scale : float = plane.basis.x.dot(plane_contact_local_position) / plane.basis.x.length()
@@ -306,13 +324,14 @@ func solve_collision_plane_box(plane : VerletPlane3D, box : VerletBox3D, box_sha
 			
 			if contact_x_scale*contact_x_scale <= plane.basis.x.length_squared() and contact_z_scale*contact_z_scale <= plane.basis.z.length_squared():
 				var contact_distance_squared : float = contact_vector.length_squared()
-				if point_distance_to_plane < 0.05:
+				if point_distance_to_plane < 0.04:
 					debug_draw.add_vector(plane_contact_position, plane_contact_position + contact_vector, 4, Color.GREEN, true)
 					plane_collision_success = true
-					var rotation_dings : Vector3 = plane_contact_local_position.cross(plane_normal).normalized()
-					box.rotate(rotation_dings, 0.003)
-					box.position += plane_normal * 0.0095 * point_distance_to_plane
-					box.friction = 0.98
+					var rotation_axis : Vector3 = plane_contact_local_position.cross(plane_normal).normalized()
+					debug_draw.add_vector(box.position, box.position + rotation_axis, 2, Color.AQUA, true)
+					box.angular_acceleration += rotation_axis * 15.0
+					box.position += plane_normal * 0.04 * point_distance_to_plane
+					box.friction = 0.99
 					
 		#if not plane_collision_success:
 		#	debug_draw.add_vector(plane_contact_position, plane_contact_position + contact_vector, 4, Color.PURPLE, true)

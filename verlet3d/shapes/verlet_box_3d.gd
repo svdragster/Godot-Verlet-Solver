@@ -72,7 +72,7 @@ func update(delta : float) -> void:
 
 func update_rotation(delta : float):
 	var angular_velocity : Vector3 = (rotation - last_rotation) * friction
-	if angular_velocity.length_squared() < 0.005:
+	if angular_velocity.length_squared() < 0.0005:
 		angular_velocity = Vector3.ZERO
 		last_rotation = rotation
 	var new_rotation : Vector3 = rotation + angular_velocity + (angular_acceleration) * (delta * delta)

@@ -1,0 +1,41 @@
+[gd_scene load_steps=8 format=3 uid="uid://bifb7q0vtoqj5"]
+
+[ext_resource type="Script" path="res://example/3d/Example3D_Box_Sphere.gd" id="1_u8d1w"]
+[ext_resource type="PackedScene" uid="uid://bnk7pkj2k3gjf" path="res://example/3d/debug_camera.tscn" id="2_it1jt"]
+[ext_resource type="PackedScene" uid="uid://1ic0f4wrfth0" path="res://verlet3d/verlet_solver_3d.tscn" id="3_wrp2v"]
+[ext_resource type="PackedScene" uid="uid://c4gmrrfbr2agv" path="res://verlet3d/shapes/verlet_box_3d.tscn" id="5_kau3o"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_smfak"]
+sky_top_color = Color(0.298039, 0.443137, 0.717647, 1)
+sky_horizon_color = Color(0.513726, 0.678431, 0.803922, 1)
+ground_bottom_color = Color(0.0941176, 0.0784314, 0.0666667, 1)
+ground_horizon_color = Color(0.615686, 0.388235, 0.294118, 1)
+ground_curve = 0.00378927
+
+[sub_resource type="Sky" id="Sky_lg003"]
+sky_material = SubResource("ProceduralSkyMaterial_smfak")
+
+[sub_resource type="Environment" id="Environment_j7owh"]
+background_mode = 2
+sky = SubResource("Sky_lg003")
+
+[node name="Example3D" type="Node3D"]
+script = ExtResource("1_u8d1w")
+
+[node name="DebugCamera3D" parent="." instance=ExtResource("2_it1jt")]
+transform = Transform3D(1, 0, 0, 0, 0.614658, 0.788794, 0, -0.788794, 0.614658, -0.324685, 2.94611, 2.47351)
+rotation_edit_mode = 2
+
+[node name="VerletSolver3D" parent="." instance=ExtResource("3_wrp2v")]
+substeps = 4
+gravity = Vector3(0, -5, 0)
+
+[node name="VerletBox3D" parent="VerletSolver3D" instance=ExtResource("5_kau3o")]
+transform = Transform3D(1.99371, 0.0792247, 0, -0.158449, 0.996857, 0, 0, 0, 2, 0, 1, -0.5)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.932784, -1.57552e-08, 0.360436, -0.354327, -0.183334, 0.916974, 0.0660802, -0.983051, -0.171011, 0, 2, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_j7owh")
